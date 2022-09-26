@@ -25,16 +25,47 @@ func main() {
 	// fmt.Println(myMap)
 
 	// * slice map
-	students := []map[string]string{
-		{"name": "Agung", "score": "A"},
-		{"name": "Ilham", "score": "B"},
-		{"name": "Aris", "score": "C"},
+	// students := []map[string]string{
+	// 	{"name": "Agung", "score": "A"},
+	// 	{"name": "Ilham", "score": "B"},
+	// 	{"name": "Aris", "score": "C"},
+	// }
+
+	// for _, values := range students {
+	// 	fmt.Println(values["name"])
+	// }
+
+	// fmt.Println(students)
+
+	// * Quiz
+	scores := [8]int{100, 80, 75, 92, 70, 93, 88, 67}
+
+	// * rata rata
+	rate := getRate(scores[:])
+	fmt.Println(rate)
+
+	// * good scores
+	goodScores := getGoodScores(scores[:])
+	fmt.Println(goodScores)
+}
+
+func getGoodScores(scores []int) []int {
+	var tempScores []int
+
+	for _, value := range scores {
+		if value >= 90 {
+			tempScores = append(tempScores, value)
+		}
 	}
 
-	for _, values := range students {
-		fmt.Println(values["name"])
+	return tempScores
+}
+
+func getRate(scores []int) float64 {
+	var total float64
+	for _, value := range scores {
+		total += float64(value)
 	}
 
-	fmt.Println(students)
-
+	return total / float64(len(scores))
 }
