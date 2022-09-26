@@ -18,6 +18,9 @@ func main() {
 		fmt.Println(v)
 	}
 
+	// check existence
+	value, isAvailable := myMap["c"]
+	fmt.Print(value, isAvailable)
 	fmt.Println(myMap)
 
 }
