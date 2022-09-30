@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"basic-http/entity"
 	"html/template"
 	"log"
 	"net/http"
@@ -15,16 +16,22 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// w.Write([]byte("Hellow Root"))
-	tmpl, err := template.ParseFiles(path.Join("views", "index.html"))
+	tmpl, err := template.ParseFiles(path.Join("views", "index.html"), path.Join("views", "layout.html"))
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
 		return
 	}
 
-	data := map[string]string{
-		"title":          "Golang basic http web",
-		"welcomeMessage": "Halo, this is a basic web example made by GO",
+	// data := map[string]string{
+	// 	"title":          "Golang basic http web",
+	// 	"welcomeMessage": "Halo, this is a basic web example made by GO",
+	// }
+
+	data := []entity.Product{
+		{ID: 1, Name: "Asus", Price: 20, Stock: 2},
+		{ID: 1, Name: "HP", Price: 15, Stock: 4},
+		{ID: 1, Name: "Macbool", Price: 25, Stock: 5},
 	}
 
 	err = tmpl.Execute(w, data)
@@ -54,7 +61,7 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 
 	// fmt.Fprintf(w, "Product number : %d", idNum)
 
-	tmpl, err := template.ParseFiles(path.Join("views", "product.html"))
+	tmpl, err := template.ParseFiles(path.Join("views", "product.html"), path.Join("views", "layout.html"))
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
