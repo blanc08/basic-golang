@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -23,7 +22,12 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tmpl.Execute(w, nil)
+	data := map[string]string{
+		"title":          "Golang basic http web",
+		"welcomeMessage": "Halo, this is a basic web example made by GO",
+	}
+
+	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
@@ -48,5 +52,24 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "Product number : %d", idNum)
+	// fmt.Fprintf(w, "Product number : %d", idNum)
+
+	tmpl, err := template.ParseFiles(path.Join("views", "product.html"))
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	data := map[string]string{
+		"title": "Golang basic http web",
+		"id":    id,
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
 }
